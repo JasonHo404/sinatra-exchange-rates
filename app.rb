@@ -26,10 +26,15 @@ get('/:code1') do
 end
 
 get('/:code1/:code2') do
-  
 
   @code1 = params.fetch("code1")
   @code2 = params.fetch("code2")
+  
+  url = "https://api.exchangerate.host/convert?from=#{@code1}&to=#{@code2}"
+  uri = URI(url)
+  response =  HTTP.get(uri)
+  @response_obj = JSON.parse(response)
+  @result = @response_obj.fetch("result")
 
   erb(:end)
 end

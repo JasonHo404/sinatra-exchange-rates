@@ -1,8 +1,11 @@
+
+
 <ul>
+  <% @symbols.each do |country, code| %>
     <li>
-      <a href="/AED">
-        Convert 1 AED to...
+      <a href="/<%=country%>">
+        Convert 1 <%= country %> to... 
       </a>
     </li>
-  </ul>
-  
+  <% end %>
+</ul>

@@ -1,15 +1,35 @@
 require "sinatra"
 require "sinatra/reloader"
-require "http"
-require "json"
+require 'http'
+require 'json'
 
-url = "https://api.exchangerate.host/symbols"
-
-raw_response = HTTP.get(url)
-
-parsed_response = JSON.parse(raw_response)
 
 get("/") do
-  
+  url = "https://api.exchangerate.host/symbols"
+  uri = URI(url)
+  response =  HTTP.get(uri)
+  @response_obj = JSON.parse(response)
+  @symbols = @response_obj.fetch("symbols")
+  "hi"
   erb(:hi)
+end
+
+get('/:code1') do
+  url = "https://api.exchangerate.host/symbols"
+  uri = URI(url)
+  response =  HTTP.get(uri)
+  @response_obj = JSON.parse(response)
+  @symbols = @response_obj.fetch("symbols")
+
+  @code1 = params.fetch("code1")
+  erb(:two)
+end
+
+get('/:code1/:code2') do
+  
+
+  @code1 = params.fetch("code1")
+  @code2 = params.fetch("code2")
+
+  erb(:end)
 end
